@@ -1,20 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { View } from 'react-native';
+import Botones from './components/Botones';
+import Cubo from './components/Cubo';
 
 export default function App() {
+  const [items, setItems] = useState<number[]>([]);
+
+  const aumentar = () => setItems([...items, items.length + 1]);
+  const reducir = () => setItems(items.slice(0, -1));
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={{ flex: 1, padding: 20 }}>
+      <Botones aumentar={aumentar} reducir={reducir} />
+      <Cubo contenido={items} limiteFilas={10} />
     </View>
   );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+};

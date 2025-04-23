@@ -29,7 +29,7 @@ const Cubo = ({ contenido, limiteFilas }: CubeProps) => {
   const filas = dividirEnFilas(contenido);
 
   return (
-    <View style={{ flex: 1, marginTop: 20, borderWidth: 1, padding: 10 }}>
+    <View style={{ flex: 1, marginTop: 20, borderWidth: 1, padding: 10, flexWrap: 'wrap' }}>
       {contenido.length > 0 ? (
         filas.map((fila, i) => (
           <View key={i} style={{ flexDirection: 'row', justifyContent: 'center', marginBottom: 5 }}>

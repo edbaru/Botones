@@ -1,4 +1,4 @@
-import { create,  } from 'zustand'
+import { create, } from 'zustand'
 
 interface BearState {
     items: number[];
@@ -6,8 +6,8 @@ interface BearState {
     reducir: () => void;
 };
 
-export const useContext = create<BearState>()((set) => ({
+export const useStore = create<BearState>()((set) => ({
     items: [],
-    aumentar: () => set((state) => ({ ...state.items.push})),
-    reducir: () => set((state) => ({ ...state.items.pop }))
+    aumentar: () => set((state) => ({ items: [...state.items, state.items.length + 1] })),
+    reducir: () => set((state) => ({ items: state.items.slice(0, -1) }))
 }))

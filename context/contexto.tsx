@@ -1,12 +1,22 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useReducer, ReactNode } from 'react';
 
 type ItemsContextType = {
   items: number[];
-  aumentar: () => void;
-  reducir: () => void;
+  dispatch: (action: {type: string}) => void;
 };
 
 const ItemsContext = createContext<ItemsContextType | undefined>(undefined);
+
+const reducer = (state: number[], action: {type: string}) => {
+  switch (action.type) {
+    case 'AUMENTAR':
+      return [...state, state.length + 1];
+    case 'REDUCIR':
+      return state.slice(0, -1);
+    default:
+      return state;
+  }
+};
 
 export const useItems = () => {
   const context = useContext(ItemsContext);
@@ -17,13 +27,10 @@ export const useItems = () => {
 };
 
 export const ItemsProvider = ({ children }: { children: ReactNode }) => {
-  const [items, setItems] = useState<number[]>([]);
-
-  const aumentar = () => setItems([...items, items.length + 1]);
-  const reducir = () => setItems(items.slice(0, -1));
+  const [items, dispatch] = useReducer(reducer, []);
 
   return (
-    <ItemsContext.Provider value={{ items, aumentar, reducir }}>
+    <ItemsContext.Provider value={{ items, dispatch }}>
       {children}
     </ItemsContext.Provider>
   );
